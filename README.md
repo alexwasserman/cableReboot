@@ -1,13 +1,13 @@
 # cableReboot
-Tests connection speed then reboots cable modem if slow
+Tests connection speed then reboots cable modem if slow. I've found that with Charter my cable modem often runs well on initial connection, but can get very slow over time, and need rebooting. I've automated this check, putting it into my crontab (OS X)
 
-Uses http://testmy.net/ to supply a file of given size using wget and capturing the avg download speed after. Runs $reps iterations, specified at the top of the script.
+Uses http://testmy.net/ to supply a file of given size using wget and capturing the avg download speed after. Runs $reps iterations, specified at the top of the script. Would also work just fine with the speedtest-cli package - instead of a wget on testmy.net you can run speedtest-cli and grep out the download speed. Or, use both. speedtest_cli is in Homebrew.
 
 Tries to grab a 3Mb file, then uses the Mb/s value as a size on the next run. This algo accounts for times when it's slow - ie. large downloads timeout fast, and when speed is good, and you need a larger file to accurately judge the average. A little trial and error show this works somewhat accurately.
 
 If the average of $reps runs is less than 20Mb/s it will run another test with a 5Mb file, and reboot if the result is less than 15Mb/s. These are all hard-coded values based on my personal connection.
 
-The modem URL to reboot works for my cable modem - might take some testing to find the correct URL. Using the Chrome debugger I traced the arguments passed in and worked out what to send.
+The modem URL to reboot works for my cable modem (Arris SB6183) - might take some testing to find the correct URL. Using the Chrome debugger I traced the arguments passed in and worked out what to send.
 
 Configure
 =========
